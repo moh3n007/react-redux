@@ -3,16 +3,16 @@ import "./loading.css";
 const Loading = () => {
   return (
     <div id="loading">
-      <ul>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+      <ul id="loadingUl">
+        <li id="loadingLi"></li>
+        <li id="loadingLi"></li>
+        <li id="loadingLi"></li>
+        <li id="loadingLi"></li>
+        <li id="loadingLi"></li>
+        <li id="loadingLi"></li>
+        <li id="loadingLi"></li>
+        <li id="loadingLi"></li>
+        <li id="loadingLi"></li>
       </ul>
     </div>
   );
