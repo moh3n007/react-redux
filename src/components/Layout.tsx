@@ -1,14 +1,25 @@
+import { IUser } from "interface";
+import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { State } from "state/reducers";
 
 const Layout = () => {
-  const authenticated = false;
   let location = useLocation();
+  const user = useSelector((state: State) => state.user as IUser);
 
-  if (!authenticated) {
+  console.log(user);
+  
+
+  if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  return <div><Outlet />layout</div>;
+  return (
+    <div>
+      <Outlet />
+      layout
+    </div>
+  );
 };
 
 export default Layout;
