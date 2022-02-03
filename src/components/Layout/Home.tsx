@@ -102,7 +102,7 @@ const Home = () => {
             onChange={(e) =>
               setFacet({ ...facet, userId: Number(e.target.value) })
             }
-            value={facet.userId ?? ""}
+            value={facet.userId ?? 0}
           />
           <Button
             onClick={() =>

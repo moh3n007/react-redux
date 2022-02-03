@@ -27,7 +27,7 @@ const Select: FC<ISelectProps> = (props) => {
       >
         {list.map((item) => (
           <MenuItem key={`${rest?.id}-${item}`} value={item}>
-            {item}
+            {item === 0 ? "None" : item}
           </MenuItem>
         ))}
       </MiuSelect>
