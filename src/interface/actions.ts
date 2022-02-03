@@ -1,3 +1,4 @@
+import { IImage } from "./gallery";
 import { IPost, IPosts } from "./posts";
 import { IUser } from "./user";
 
@@ -115,3 +116,30 @@ export type DeletePostAction =
   | ErrorDeletePostAction
   | DeletedPostAction
   | DeletingPostAction;
+//////////////////
+
+// get galley
+export enum GalleryActionType {
+  GET_GALLERY = "getGallery",
+  GALLERY_ERROR = "galleryError",
+  GET_MORE_GALLERY = "getMoreGallery",
+}
+
+interface SuccessGalleryAction {
+  type: GalleryActionType.GET_GALLERY;
+  payload: IImage[];
+}
+
+interface ErrorGalleryAction {
+  type: GalleryActionType.GALLERY_ERROR;
+  payload: string[];
+}
+
+interface GetMoreGalleryAction {
+  type: GalleryActionType.GET_MORE_GALLERY;
+}
+
+export type GalleryAction =
+  | SuccessGalleryAction
+  | ErrorGalleryAction
+  | GetMoreGalleryAction;

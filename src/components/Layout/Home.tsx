@@ -5,13 +5,12 @@ import PostItem from "components/Home/PostItem";
 import DeleteModal from "components/shared/DeleteModal/DeleteModal";
 import Loading from "components/shared/Loading/Loading";
 import Select from "components/shared/Select/Select";
-import { IPost, IPosts, postsData } from "interface/posts";
+import { IPost, postsData } from "interface/posts";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "state";
 import { State } from "state/reducers";
-import "../Home/home.css";
 
 const limitPage = [5, 10, 15, 20];
 const usersId = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -60,8 +59,6 @@ const Home = () => {
   if (error) return <span>Error in getting Posts data</span>;
 
   const handleChangePage = (page: number) => {
-    console.log(page);
-
     setFacet({ ...facet, start: page * facet.limit - facet.limit });
   };
 

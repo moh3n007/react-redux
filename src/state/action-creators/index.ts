@@ -4,6 +4,8 @@ import {
   CreatePostsActionType,
   DeletePostAction,
   DeletePostsActionType,
+  GalleryAction,
+  GalleryActionType,
   IUser,
   ModalAction,
   ModalActionType,
@@ -14,6 +16,8 @@ import {
 } from "interface";
 import { IPost } from "interface/posts";
 import { Dispatch } from "redux";
+
+const unsplashAccessKey = process.env.REACT_APP_UNSPLASH_ACCESS_KEY;
 
 export const login = (newUser: IUser, callback: VoidFunction) => {
   return (dispatch: Dispatch<UserAction>) => {
@@ -128,6 +132,29 @@ export const deletePost =
     } catch (error) {
       dispatch({
         type: DeletePostsActionType.Delete_POST_ERROR,
+        payload: error as string[],
+      });
+    }
+  };
+
+export const getGallery =
+  (query?: string) => async (dispatch: Dispatch<GalleryAction>) => {
+    dispatch({
+      type: GalleryActionType.GET_MORE_GALLERY,
+    });
+    let url = `https://api.unsplash.com/photos?client_id=${unsplashAccessKey}`;
+    if (!!query) {
+      url = `https://api.unsplash.com/search/photos?client_id=${unsplashAccessKey}&query=${query}`;
+    }
+    try {
+      const res = await axios.get(url);
+      dispatch({
+        type: GalleryActionType.GET_GALLERY,
+        payload: res.data.results ?? res.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GalleryActionType.GALLERY_ERROR,
         payload: error as string[],
       });
     }
