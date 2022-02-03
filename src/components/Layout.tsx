@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { State } from "state/reducers";
 import SideMenu from "./Layout/SideMenu";
-import "./Layout/layout.css";
-import { actionCreators, store } from "state/index";
+import { actionCreators } from "state/index";
 import ApiErrorModal from "./Layout/ApiErrorModal";
 import { bindActionCreators } from "redux";
+import { Box } from "@material-ui/core";
 
 const Layout = () => {
   let location = useLocation();
@@ -21,12 +21,12 @@ const Layout = () => {
 
   return (
     <>
-      <div className="layoutWrapper">
+      <Box display="flex" width=" 100%" height="100%">
         <SideMenu />
-        <main>
+        <Box component="main" flex={1} overflow="auto">
           <Outlet />
-        </main>
-      </div>
+        </Box>
+      </Box>
       {modal.showModal && (
         <ApiErrorModal message={modal.message} onClose={() => closeModal()} />
       )}

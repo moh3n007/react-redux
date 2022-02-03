@@ -30,7 +30,7 @@ const DeleteModal: FC<IDeleteModalProps> = (props) => {
         minWidth={250}
       >
         <Box mb={2}>
-          <Typography variant="h5">Error Modal</Typography>
+          <Typography variant="h5">Delete Modal</Typography>
         </Box>
         <Box mb={2}>
           <Typography>"Are you Sure?"</Typography>

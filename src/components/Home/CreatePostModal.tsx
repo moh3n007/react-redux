@@ -5,16 +5,11 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import Modal, { ModalProps } from "@material-ui/core/Modal";
+import Modal from "@material-ui/core/Modal";
 import { IPost } from "interface/posts";
 import React, { FC } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
-interface IFormDate {
-  title: string;
-  body: string;
-  userId: number;
-}
+import { IPostFormData } from "interface/general";
 
 interface IApiErrorModalProps {
   onClose: VoidFunction;
@@ -25,7 +20,7 @@ interface IApiErrorModalProps {
 const CreatePostModal: FC<IApiErrorModalProps> = (props) => {
   const { onClose, post, handleSubmit } = props;
   const classes = useStyles();
-  const [formData, updateFormData] = React.useState<IFormDate>({
+  const [formData, updateFormData] = React.useState<IPostFormData>({
     title: post?.title ?? "",
     body: post?.body ?? "",
     userId: post?.userId ?? 1,

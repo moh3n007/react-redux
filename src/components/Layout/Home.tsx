@@ -1,25 +1,25 @@
-import { Box, Button, Typography } from "@material-ui/core";
-import CreatePostModal from "components/Home/CreatePostModal";
+import { Box, Typography } from "@material-ui/core";
 import HomeTable from "components/Home/HomeTable";
+import HomeTopComponents from "components/Home/HomeTopComponents";
 import PostItem from "components/Home/PostItem";
-import DeleteModal from "components/shared/DeleteModal/DeleteModal";
 import Loading from "components/shared/Loading/Loading";
-import Select from "components/shared/Select/Select";
+import { IFacet } from "interface/general";
 import { IPost, postsData } from "interface/posts";
-import { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "state";
 import { State } from "state/reducers";
 
-const limitPage = [5, 10, 15, 20];
-const usersId = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+// lazy imports
+const DeleteModal = React.lazy(
+  () => import("components/shared/DeleteModal/DeleteModal")
+);
+const CreatePostModal = React.lazy(
+  () => import("components/Home/CreatePostModal")
+);
 
-interface IFacet {
-  start: number;
-  limit: number;
-  userId?: number;
-}
+const limitPage = [5, 10, 15, 20];
 
 interface ICreatePostData {
   open: boolean;
@@ -92,28 +92,20 @@ const Home = () => {
     <>
       <Box p={3}>
         <Typography variant="h4">Posts Table</Typography>
-        <Box my={2} width="100%" display="flex" justifyContent="space-between">
-          <Select
-            list={usersId}
-            label="Filter bu user's id:"
-            onChange={(e) =>
-              setFacet({ ...facet, userId: Number(e.target.value) })
+        <Box my={2}>
+          <HomeTopComponents
+            facet={facet}
+            handleFilter={(e) =>
+              setFacet({ ...facet, start: 0, userId: Number(e.target.value) })
             }
-            value={facet.userId ?? 0}
-          />
-          <Button
-            onClick={() =>
+            handleCreate={() =>
               setCreatePostData({
                 open: true,
               })
             }
-            color="primary"
-            variant="contained"
-          >
-            Create a post
-          </Button>
+          />
         </Box>
-        <div className="tableWrapper">
+        <Box>
           {loading ? (
             <Loading />
           ) : (
@@ -145,28 +137,32 @@ const Home = () => {
               ))}
             </HomeTable>
           )}
-        </div>
+        </Box>
       </Box>
       {!!forDelete && (
-        <DeleteModal
-          onClose={() => setForDelete(undefined)}
-          onDelete={() => {
-            handleDelete(forDelete.id);
-            setForDelete(undefined);
-          }}
-        />
+        <Suspense fallback={<div>Loading...</div>}>
+          <DeleteModal
+            onClose={() => setForDelete(undefined)}
+            onDelete={() => {
+              handleDelete(forDelete.id);
+              setForDelete(undefined);
+            }}
+          />
+        </Suspense>
       )}
       {!!createPostData.open && (
-        <CreatePostModal
-          onClose={() =>
-            setCreatePostData({
-              open: false,
-              post: undefined,
-            })
-          }
-          handleSubmit={handleEditOrCreatePost}
-          post={createPostData.post}
-        />
+        <Suspense fallback={<div>Loading...</div>}>
+          <CreatePostModal
+            onClose={() =>
+              setCreatePostData({
+                open: false,
+                post: undefined,
+              })
+            }
+            handleSubmit={handleEditOrCreatePost}
+            post={createPostData.post}
+          />
+        </Suspense>
       )}
     </>
   );

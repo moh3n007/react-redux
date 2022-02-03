@@ -1,4 +1,5 @@
-import { Box, Button, TextField, Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
+import GallerySearchInput from "components/Gallery/GallerySearchInput";
 import ImageItem from "components/Gallery/ImageItem";
 import Loading from "components/shared/Loading/Loading";
 import { galleryData } from "interface/gallery";
@@ -23,25 +24,17 @@ const Gallery = () => {
   return (
     <Box p={3}>
       <Typography variant="h4">Gallery</Typography>
-      <Box
-        my={3}
-        component="form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          getGallery("london");
-          getGallery((e.target as any)?.[0].value);
-        }}
-      >
-        <Box display="flex" alignItems="center" gridGap="16px">
-          <TextField placeholder="search an image" variant="outlined" />
-          <Button color="primary" variant="contained" type="submit">
-            Search
-          </Button>
-        </Box>
+      <Box my={3}>
+        <GallerySearchInput
+          handleSearch={(e) => {
+            e.preventDefault();
+            getGallery((e.target as any)?.[0].value);
+          }}
+        />
       </Box>
       {loading ? (
         <Loading />
-      ) : (
+      ) : !!gallery.length ? (
         <Box
           mt={3}
           gridGap="16px"
@@ -52,6 +45,8 @@ const Gallery = () => {
             <ImageItem key={`gallery-img-${image.id}`} image={image} />
           ))}
         </Box>
+      ) : (
+        <Typography>There is no image</Typography>
       )}
     </Box>
   );

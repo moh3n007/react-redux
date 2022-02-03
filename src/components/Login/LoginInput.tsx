@@ -1,5 +1,6 @@
+import { Box } from "@material-ui/core";
 import React, { FC } from "react";
-import "./login.css";
+import { makeStyles } from "@material-ui/core/styles";
 
 type ILoginInputProps = {
   label: string;
@@ -10,6 +11,7 @@ type ILoginInputProps = {
 
 const LoginInput: FC<ILoginInputProps> = (props) => {
   const { label, ...rest } = props;
+  const classes = useStyles();
 
   const [error, setError] = React.useState("");
 
@@ -36,22 +38,44 @@ const LoginInput: FC<ILoginInputProps> = (props) => {
   };
 
   return (
-    <div className="loginInputWrapper">
+    <Box display="flex" flexDirection="column">
       <label
-        className={`loginInputLabel ${error ? "error" : ""}`}
+        className={`${classes.label} ${error ? classes.labelError : ""}`}
         htmlFor="username"
       >
         {label}:
       </label>
       <input
         {...rest}
-        className={`loginInput ${error ? "error" : ""}`}
+        className={`${classes.input} ${error ? classes.inputError : ""}`}
         onInvalid={handleInvalid}
         onChange={handleChange}
       />
-      {error && <span className="loginInputError">* {error}</span>}
-    </div>
+      {error && <span className={classes.errorText}>* {error}</span>}
+    </Box>
   );
 };
+
+const useStyles = makeStyles({
+  label: {
+    marginBottom: 10,
+  },
+  labelError: {
+    color: "red",
+  },
+  input: {
+    border: "1px solid #d2c6c6",
+    borderRadius: 4,
+    padding: 6,
+  },
+  inputError: {
+    borderColor: "red",
+  },
+  errorText: {
+    marginTop: 6,
+    color: "red",
+    fontsize: "0.75rem",
+  },
+});
 
 export default LoginInput;

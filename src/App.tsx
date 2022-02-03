@@ -1,16 +1,18 @@
 import Login from "components/Login";
 import NotFound from "components/NotFound";
-import Gallery from "components/Layout/Gallery";
-import Home from "components/Layout/Home";
-import Layout from "components/Layout";
 import { Route, Routes } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "state";
 import Loading from "components/shared/Loading/Loading";
 import store from "store";
-import Todo from "components/Layout/Todo";
+
+// lazy imports
+const Layout = React.lazy(() => import("components/Layout"));
+const Home = React.lazy(() => import("components/Layout/Home"));
+const Gallery = React.lazy(() => import("components/Layout/Gallery"));
+const Todo = React.lazy(() => import("components/Layout/Todo"));
 
 const App = () => {
   const dispatch = useDispatch();
@@ -35,7 +37,14 @@ const App = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="*" element={<NotFound />} />
-      <Route path="/" element={<Layout />}>
+      <Route
+        path="/"
+        element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <Layout />
+          </Suspense>
+        }
+      >
         <Route index element={<Home />} />
         <Route path="gallery" element={<Gallery />} />
         <Route path="todo" element={<Todo />} />
