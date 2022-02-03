@@ -6,6 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "state/index";
+import Interceptor from "service/serviceBaseInterceptor";
+Interceptor.interceptor(store);
 
 ReactDOM.render(
   <React.StrictMode>

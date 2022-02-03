@@ -1,0 +1,29 @@
+.homeWrapper {
+  padding: 24px;
+}
+.tableWrapper {
+  min-height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.homeTable {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.homeTd,
+.homeTh {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.homeTr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.paginationTr {
+  border: 1px solid #dddddd;
+}

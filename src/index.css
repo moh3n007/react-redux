@@ -5,6 +5,15 @@ body,
   height: 100%;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  position: relative;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
